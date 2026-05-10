@@ -1,0 +1,195 @@
+/* =========================================================================
+   KarmaLab — Colors & Type
+   A design system rooted in black, neon pink, and liquid chrome.
+   ========================================================================= */
+
+:root {
+  /* ---------- Core palette ---------- */
+  --kl-black:        #000000;
+  --kl-ink:          #0A0A0B;
+  --kl-smoke:        #141417;
+  --kl-coal:         #1C1C20;
+  --kl-graphite:     #2A2A30;
+  --kl-steel:        #4A4A55;
+  --kl-ash:          #8A8A94;
+  --kl-fog:          #C6C6CE;
+  --kl-bone:         #EDEDEF;
+  --kl-white:        #FFFFFF;
+
+  /* ---------- Accent: Neon Pink ---------- */
+  --kl-pink:         #FB48C4;
+  --kl-pink-hot:     #FD7BD8;
+  --kl-pink-deep:    #C12E9A;
+  --kl-pink-ghost:   rgba(251, 72, 196, 0.12);
+  --kl-pink-veil:    rgba(251, 72, 196, 0.24);
+  --kl-pink-glow:    rgba(251, 72, 196, 0.55);
+
+  /* ---------- Accent: Lime ---------- */
+  --kl-lime:         #85FF00;
+  --kl-lime-hot:     #AFFF56;
+  --kl-lime-deep:    #5BB300;
+  --kl-lime-ghost:   rgba(133, 255, 0, 0.10);
+  --kl-lime-veil:    rgba(133, 255, 0, 0.22);
+  --kl-lime-glow:    rgba(133, 255, 0, 0.50);
+
+  /* ---------- Semantic ---------- */
+  --kl-success:      #5EE6A8;
+  --kl-warning:      #FFC857;
+  --kl-danger:       #FF5C7A;
+  --kl-info:         #7EC8FF;
+
+  /* ---------- Foreground / background tokens ---------- */
+  --bg-0:            var(--kl-black);
+  --bg-1:            var(--kl-ink);
+  --bg-2:            var(--kl-smoke);
+  --bg-3:            var(--kl-coal);
+
+  --fg-1:            var(--kl-bone);
+  --fg-2:            var(--kl-ash);
+  --fg-3:            var(--kl-steel);
+  --fg-accent:       var(--kl-pink);
+  --fg-interactive:  var(--kl-lime);
+  --fg-inverse:      var(--kl-black);
+
+  --border-1:        rgba(255, 255, 255, 0.08);
+  --border-2:        rgba(255, 255, 255, 0.14);
+  --border-pink:     var(--kl-pink);
+  --border-pink-dim: rgba(251, 72, 196, 0.40);
+  --border-lime:     var(--kl-lime);
+  --border-lime-dim: rgba(133, 255, 0, 0.40);
+
+  /* ---------- Type families ---------- */
+  --font-display:    'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans:       'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:       'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+
+  /* ---------- Type scale ---------- */
+  --fs-12:  0.75rem;
+  --fs-13:  0.8125rem;
+  --fs-14:  0.875rem;
+  --fs-16:  1rem;
+  --fs-18:  1.125rem;
+  --fs-20:  1.25rem;
+  --fs-24:  1.5rem;
+  --fs-32:  2rem;
+  --fs-44:  2.75rem;
+  --fs-64:  4rem;
+  --fs-96:  6rem;
+  --fs-128: 8rem;
+
+  /* line height */
+  --lh-tight: 0.95;
+  --lh-snug:  1.1;
+  --lh-body:  1.5;
+  --lh-loose: 1.7;
+
+  /* letter spacing */
+  --ls-tight:   -0.02em;
+  --ls-tighter: -0.035em;
+  --ls-wide:    0.02em;
+  --ls-caps:    0.14em;
+
+  /* weights */
+  --fw-light:  300;
+  --fw-normal: 400;
+  --fw-med:    500;
+  --fw-bold:   700;
+
+  /* ---------- Spacing scale (4pt grid) ---------- */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  24px;
+  --sp-6:  32px;
+  --sp-7:  48px;
+  --sp-8:  64px;
+  --sp-9:  96px;
+  --sp-10: 128px;
+  --sp-11: 192px;
+
+  /* ---------- Radii ---------- */
+  --r-xs:   4px;
+  --r-sm:   8px;
+  --r-md:   14px;
+  --r-lg:   20px;
+  --r-xl:   28px;
+  --r-pill: 999px;
+
+  /* ---------- Borders ---------- */
+  --bw-hair:  1px;
+  --bw-thin:  1.5px;
+  --bw-med:   2px;
+  --bw-thick: 3px;
+
+  /* ---------- Shadows / glows ---------- */
+  --sh-card:       0 1px 0 rgba(255,255,255,0.03) inset,
+                   0 20px 40px -20px rgba(0,0,0,0.6);
+  --sh-pop:        0 30px 60px -20px rgba(0,0,0,0.75);
+  --sh-pink-glow:  0 0 0 1px var(--border-pink-dim),
+                   0 0 24px var(--kl-pink-glow);
+  --sh-pink-hot:   0 0 0 2px var(--kl-pink),
+                   0 0 42px rgba(253, 123, 216,0.55);
+  --sh-lime-glow:  0 0 0 1px var(--border-lime-dim),
+                   0 0 24px var(--kl-lime-glow);
+  --sh-lime-hot:   0 0 0 2px var(--kl-lime),
+                   0 0 42px rgba(175,255,86,0.55);
+  --sh-inset-hi:   inset 0 1px 0 rgba(255,255,255,0.06);
+
+  /* ---------- Motion ---------- */
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-squish: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --dur-fast:    120ms;
+  --dur-base:    220ms;
+  --dur-slow:    420ms;
+  --dur-slower:  680ms;
+}
+
+/* ---------- Base ---------- */
+html, body {
+  margin: 0;
+  background: #000;
+  overflow-x: hidden;
+}
+
+body {
+  color: var(--kl-bone);
+  font-family: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(251, 72, 196, .25);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(251, 72, 196, .5); }
+
+/* ---------- Animations ---------- */
+@keyframes kl-breathe {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50%       { transform: scale(1.03) rotate(1.2deg); }
+}
+
+@keyframes kl-pulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.5); }
+  50%       { opacity: 1;   transform: scaleY(1); }
+}
+
+@keyframes kl-fade-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Scroll-triggered section entrance ---------- */
+section[id] {
+  animation: kl-fade-in 680ms cubic-bezier(.22,1,.36,1) both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 24%;
+}
