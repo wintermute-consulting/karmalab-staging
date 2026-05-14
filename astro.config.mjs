@@ -5,7 +5,7 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://wintermute-consulting.github.io/karmalab-tech',
-  base: '/',
+  site: 'https://wintermute-consulting.github.io/karmalab-staging',
+  base: '/karmalab-staging',
   integrations: [react()],
 });
