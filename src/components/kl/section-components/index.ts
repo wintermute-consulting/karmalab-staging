@@ -1,3 +1,4 @@
+export { SectionProjectsGrid } from './SectionProjectsGrid';
 export { SectionWhatWeDo } from './SectionWhatWeDo';
 export { SectionHowItWorks } from './SectionHowItWorks';
 export { SectionForWho } from './SectionForWho';

@@ -1,3 +1,53 @@
+@import 'tailwindcss';
+
+/* =========================================================================
+   KarmaLab — Tailwind v4 theme tokens
+   Maps design system values into Tailwind utility classes.
+   @theme vars here are ADDITIONAL to the :root vars below.
+   ========================================================================= */
+@theme {
+  /* Colors */
+  --color-kl-black: #000000;
+  --color-kl-ink: #0a0a0b;
+  --color-kl-smoke: #141417;
+  --color-kl-coal: #1c1c20;
+  --color-kl-graphite: #2a2a30;
+  --color-kl-steel: #4a4a55;
+  --color-kl-ash: #8a8a94;
+  --color-kl-fog: #c6c6ce;
+  --color-kl-bone: #ededef;
+  --color-kl-white: #ffffff;
+  --color-kl-pink: #fb48c4;
+  --color-kl-pink-hot: #fd7bd8;
+  --color-kl-pink-deep: #c12e9a;
+  --color-kl-lime: #85ff00;
+  --color-kl-lime-hot: #afff56;
+  --color-kl-lime-deep: #5bb300;
+  --color-kl-success: #5ee6a8;
+  --color-kl-warning: #ffc857;
+  --color-kl-danger: #ff5c7a;
+  --color-kl-info: #7ec8ff;
+
+  /* Font families */
+  --font-display: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Border radii */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 20px 40px -20px rgba(0, 0, 0, 0.6);
+  --shadow-pop: 0 30px 60px -20px rgba(0, 0, 0, 0.75);
+  --shadow-pink-glow: 0 0 0 1px rgba(251, 72, 196, 0.4), 0 0 24px rgba(251, 72, 196, 0.55);
+  --shadow-lime-glow: 0 0 0 1px rgba(133, 255, 0, 0.4), 0 0 24px rgba(133, 255, 0, 0.5);
+}
+
 /* =========================================================================
    KarmaLab — Colors & Type
    A design system rooted in black, neon pink, and liquid chrome.
@@ -5,191 +55,366 @@
 
 :root {
   /* ---------- Core palette ---------- */
-  --kl-black:        #000000;
-  --kl-ink:          #0A0A0B;
-  --kl-smoke:        #141417;
-  --kl-coal:         #1C1C20;
-  --kl-graphite:     #2A2A30;
-  --kl-steel:        #4A4A55;
-  --kl-ash:          #8A8A94;
-  --kl-fog:          #C6C6CE;
-  --kl-bone:         #EDEDEF;
-  --kl-white:        #FFFFFF;
+  --kl-black: #000000;
+  --kl-ink: #0a0a0b;
+  --kl-smoke: #141417;
+  --kl-coal: #1c1c20;
+  --kl-graphite: #2a2a30;
+  --kl-steel: #4a4a55;
+  --kl-ash: #8a8a94;
+  --kl-fog: #c6c6ce;
+  --kl-bone: #ededef;
+  --kl-white: #ffffff;
 
   /* ---------- Accent: Neon Pink ---------- */
-  --kl-pink:         #FB48C4;
-  --kl-pink-hot:     #FD7BD8;
-  --kl-pink-deep:    #C12E9A;
-  --kl-pink-ghost:   rgba(251, 72, 196, 0.12);
-  --kl-pink-veil:    rgba(251, 72, 196, 0.24);
-  --kl-pink-glow:    rgba(251, 72, 196, 0.55);
+  --kl-pink: #fb48c4;
+  --kl-pink-hot: #fd7bd8;
+  --kl-pink-deep: #c12e9a;
+  --kl-pink-ghost: rgba(251, 72, 196, 0.12);
+  --kl-pink-veil: rgba(251, 72, 196, 0.24);
+  --kl-pink-glow: rgba(251, 72, 196, 0.55);
 
   /* ---------- Accent: Lime ---------- */
-  --kl-lime:         #85FF00;
-  --kl-lime-hot:     #AFFF56;
-  --kl-lime-deep:    #5BB300;
-  --kl-lime-ghost:   rgba(133, 255, 0, 0.10);
-  --kl-lime-veil:    rgba(133, 255, 0, 0.22);
-  --kl-lime-glow:    rgba(133, 255, 0, 0.50);
+  --kl-lime: #85ff00;
+  --kl-lime-hot: #afff56;
+  --kl-lime-deep: #5bb300;
+  --kl-lime-ghost: rgba(133, 255, 0, 0.1);
+  --kl-lime-veil: rgba(133, 255, 0, 0.22);
+  --kl-lime-glow: rgba(133, 255, 0, 0.5);
 
   /* ---------- Semantic ---------- */
-  --kl-success:      #5EE6A8;
-  --kl-warning:      #FFC857;
-  --kl-danger:       #FF5C7A;
-  --kl-info:         #7EC8FF;
+  --kl-success: #5ee6a8;
+  --kl-warning: #ffc857;
+  --kl-danger: #ff5c7a;
+  --kl-info: #7ec8ff;
 
   /* ---------- Foreground / background tokens ---------- */
-  --bg-0:            var(--kl-black);
-  --bg-1:            var(--kl-ink);
-  --bg-2:            var(--kl-smoke);
-  --bg-3:            var(--kl-coal);
+  --bg-0: var(--kl-black);
+  --bg-1: var(--kl-ink);
+  --bg-2: var(--kl-smoke);
+  --bg-3: var(--kl-coal);
 
-  --fg-1:            var(--kl-bone);
-  --fg-2:            var(--kl-ash);
-  --fg-3:            var(--kl-steel);
-  --fg-accent:       var(--kl-pink);
-  --fg-interactive:  var(--kl-lime);
-  --fg-inverse:      var(--kl-black);
+  --fg-1: var(--kl-bone);
+  --fg-2: var(--kl-ash);
+  --fg-3: var(--kl-steel);
+  --fg-accent: var(--kl-pink);
+  --fg-interactive: var(--kl-lime);
+  --fg-inverse: var(--kl-black);
 
-  --border-1:        rgba(255, 255, 255, 0.08);
-  --border-2:        rgba(255, 255, 255, 0.14);
-  --border-pink:     var(--kl-pink);
-  --border-pink-dim: rgba(251, 72, 196, 0.40);
-  --border-lime:     var(--kl-lime);
-  --border-lime-dim: rgba(133, 255, 0, 0.40);
+  --border-1: rgba(255, 255, 255, 0.08);
+  --border-2: rgba(255, 255, 255, 0.14);
+  --border-solid: rgba(20, 20, 20, 1);
+  --border-pink: var(--kl-pink);
+  --border-pink-dim: rgba(251, 72, 196, 0.4);
+  --border-lime: var(--kl-lime);
+  --border-lime-dim: rgba(133, 255, 0, 0.4);
 
   /* ---------- Type families ---------- */
-  --font-display:    'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-sans:       'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-mono:       'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+  --font-display: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
 
   /* ---------- Type scale ---------- */
-  --fs-12:  0.75rem;
-  --fs-13:  0.8125rem;
-  --fs-14:  0.875rem;
-  --fs-16:  1rem;
-  --fs-18:  1.125rem;
-  --fs-20:  1.25rem;
-  --fs-24:  1.5rem;
-  --fs-32:  2rem;
-  --fs-44:  2.75rem;
-  --fs-64:  4rem;
-  --fs-96:  6rem;
+  --fs-12: 0.75rem;
+  --fs-13: 0.8125rem;
+  --fs-14: 0.875rem;
+  --fs-16: 1rem;
+  --fs-18: 1.125rem;
+  --fs-20: 1.25rem;
+  --fs-24: 1.5rem;
+  --fs-32: 2rem;
+  --fs-44: 2.75rem;
+  --fs-64: 4rem;
+  --fs-96: 6rem;
   --fs-128: 8rem;
 
   /* line height */
   --lh-tight: 0.95;
-  --lh-snug:  1.1;
-  --lh-body:  1.5;
+  --lh-snug: 1.1;
+  --lh-body: 1.5;
   --lh-loose: 1.7;
 
   /* letter spacing */
-  --ls-tight:   -0.02em;
+  --ls-tight: -0.02em;
   --ls-tighter: -0.035em;
-  --ls-wide:    0.02em;
-  --ls-caps:    0.14em;
+  --ls-wide: 0.02em;
+  --ls-caps: 0.14em;
 
   /* weights */
-  --fw-light:  300;
+  --fw-light: 300;
   --fw-normal: 400;
-  --fw-med:    500;
-  --fw-bold:   700;
+  --fw-med: 500;
+  --fw-bold: 700;
 
   /* ---------- Spacing scale (4pt grid) ---------- */
-  --sp-1:  4px;
-  --sp-2:  8px;
-  --sp-3:  12px;
-  --sp-4:  16px;
-  --sp-5:  24px;
-  --sp-6:  32px;
-  --sp-7:  48px;
-  --sp-8:  64px;
-  --sp-9:  96px;
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+  --sp-9: 96px;
   --sp-10: 128px;
   --sp-11: 192px;
 
   /* ---------- Radii ---------- */
-  --r-xs:   4px;
-  --r-sm:   8px;
-  --r-md:   14px;
-  --r-lg:   20px;
-  --r-xl:   28px;
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
   --r-pill: 999px;
 
   /* ---------- Borders ---------- */
-  --bw-hair:  1px;
-  --bw-thin:  1.5px;
-  --bw-med:   2px;
+  --bw-hair: 1px;
+  --bw-thin: 1.5px;
+  --bw-med: 2px;
   --bw-thick: 3px;
 
   /* ---------- Shadows / glows ---------- */
-  --sh-card:       0 1px 0 rgba(255,255,255,0.03) inset,
-                   0 20px 40px -20px rgba(0,0,0,0.6);
-  --sh-pop:        0 30px 60px -20px rgba(0,0,0,0.75);
-  --sh-pink-glow:  0 0 0 1px var(--border-pink-dim),
-                   0 0 24px var(--kl-pink-glow);
-  --sh-pink-hot:   0 0 0 2px var(--kl-pink),
-                   0 0 42px rgba(253, 123, 216,0.55);
-  --sh-lime-glow:  0 0 0 1px var(--border-lime-dim),
-                   0 0 24px var(--kl-lime-glow);
-  --sh-lime-hot:   0 0 0 2px var(--kl-lime),
-                   0 0 42px rgba(175,255,86,0.55);
-  --sh-inset-hi:   inset 0 1px 0 rgba(255,255,255,0.06);
+  --sh-card: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 20px 40px -20px rgba(0, 0, 0, 0.6);
+  --sh-pop: 0 30px 60px -20px rgba(0, 0, 0, 0.75);
+  --sh-pink-glow: 0 0 0 1px var(--border-pink-dim), 0 0 24px var(--kl-pink-glow);
+  --sh-pink-hot: 0 0 0 2px var(--kl-pink), 0 0 42px rgba(253, 123, 216, 0.55);
+  --sh-lime-glow: 0 0 0 1px var(--border-lime-dim), 0 0 24px var(--kl-lime-glow);
+  --sh-lime-hot: 0 0 0 2px var(--kl-lime), 0 0 42px rgba(175, 255, 86, 0.55);
+  --sh-inset-hi: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 
   /* ---------- Motion ---------- */
-  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --ease-squish: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  --dur-fast:    120ms;
-  --dur-base:    220ms;
-  --dur-slow:    420ms;
-  --dur-slower:  680ms;
+  --dur-fast: 120ms;
+  --dur-base: 220ms;
+  --dur-slow: 420ms;
+  --dur-slower: 680ms;
 }
 
 /* ---------- Base ---------- */
-html, body {
+html {
   margin: 0;
   background: #000;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
+  margin: 0;
+  background: #000;
+  /* overflow: clip does not create a scroll container, avoiding scrollbar-gutter padding */
+  overflow-x: clip;
   color: var(--kl-bone);
-  font-family: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family:
+    'Space Grotesk',
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
 }
 
 * {
   box-sizing: border-box;
 }
 
-/* ---------- Scrollbar ---------- */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb {
-  background: rgba(251, 72, 196, .25);
-  border-radius: 999px;
-}
-::-webkit-scrollbar-thumb:hover { background: rgba(251, 72, 196, .5); }
-
 /* ---------- Animations ---------- */
 @keyframes kl-breathe {
-  0%, 100% { transform: scale(1) rotate(0deg); }
-  50%       { transform: scale(1.03) rotate(1.2deg); }
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.03) rotate(1.2deg);
+  }
 }
 
 @keyframes kl-pulse {
-  0%, 100% { opacity: 0.3; transform: scaleY(0.5); }
-  50%       { opacity: 1;   transform: scaleY(1); }
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scaleY(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
 }
 
 @keyframes kl-fade-in {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes kl-scroll-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+@keyframes kl-float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-18px);
+  }
 }
 
 /* ---------- Scroll-triggered section entrance ---------- */
 section[id] {
-  animation: kl-fade-in 680ms cubic-bezier(.22,1,.36,1) both;
+  animation: kl-fade-in 680ms cubic-bezier(0.22, 1, 0.36, 1) both;
   animation-timeline: view();
   animation-range: entry 0% cover 24%;
+}
+
+/* ==========================================================================
+   SectionWhatWeDo — discipline 2×2 grid cells
+   ========================================================================== */
+.kl-discipline-cell {
+  transition: background var(--dur-base) var(--ease-out);
+  cursor: pointer;
+}
+
+.kl-discipline-cell:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.kl-discipline-cell-label {
+  transition: color var(--dur-base) var(--ease-out);
+}
+
+.kl-discipline-cell:hover .kl-discipline-cell-label {
+  color: var(--kl-lime);
+}
+
+/* ==========================================================================
+   Mobile responsive utilities  (≤ 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* Hero: stack logo above tagline */
+  .kl-hero-inner {
+    grid-template-columns: 1fr !important;
+    padding: 0 24px 32px !important;
+    gap: 16px !important;
+    align-items: center !important;
+    justify-items: center !important;
+  }
+  .kl-hero-logo {
+    width: min(200px, 48vw) !important;
+    aspect-ratio: 1 / 1;
+    margin-top: 16px;
+  }
+  .kl-hero-logo img {
+    width: 100% !important;
+  }
+  .kl-hero-tagline {
+    max-width: 100% !important;
+    gap: 24px !important;
+  }
+  .kl-hero-tagline h1 {
+    font-size: clamp(26px, 7.5vw, 40px) !important;
+    letter-spacing: -1px !important;
+  }
+  .kl-hero-tagline-btns {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+
+  .kl-hero-scroll-indicator {
+    display: none !important;
+  }
+
+  /* Section wrap: reduce vertical padding on mobile */
+  .kl-section-wrap {
+    padding-top: 72px !important;
+    padding-bottom: 72px !important;
+  }
+
+  /* KLBorderedGrid: force 1 column */
+  .kl-grid-1-mobile {
+    grid-template-columns: 1fr !important;
+  }
+  /* KLBorderedGrid: force 2 columns */
+  .kl-grid-2-mobile {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  /* Remove right border on all bordered cells when stacked */
+  .kl-grid-1-mobile > * {
+    border-right: none !important;
+  }
+
+  /* SectionHowItWorks: collapse stair layout to vertical stack */
+  .kl-hiw-stair {
+    flex-direction: column !important;
+  }
+  .kl-hiw-stair > * {
+    margin-top: 0 !important;
+  }
+
+  /* SectionWhatWeDo: stack columns on mobile */
+  .kl-what-we-do {
+    grid-template-columns: 1fr !important;
+  }
+  .kl-what-we-do-left {
+    padding-top: 72px !important;
+    padding-bottom: 72px !important;
+  }
+  /* Hide the video panel on mobile — keeps layout clean */
+  .kl-what-we-do-right {
+    display: none !important;
+  }
+
+  /* SectionWhoWeAre: stack portrait + bio */
+  .kl-who-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+  .kl-who-portrait {
+    width: min(200px, 50vw) !important;
+    margin: 0 auto;
+  }
+
+  /* SectionCTA: stack dog image above text */
+  .kl-cta-inner {
+    flex-direction: column !important;
+    gap: 40px !important;
+  }
+  .kl-cta-image {
+    flex: 0 0 auto !important;
+    max-width: min(280px, 72vw) !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+  }
+  .kl-cta-text {
+    flex: 1 1 auto !important;
+    max-width: 100% !important;
+  }
+  .kl-cta-text-btns {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+
+  /* Projects grid: 2 columns on mobile */
+  .kl-projects-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* ProjectCard: stack slideshow above text */
+  .kl-project-card-inner {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
 }

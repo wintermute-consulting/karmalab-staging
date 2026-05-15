@@ -2,16 +2,20 @@ import { useState, useEffect } from 'react';
 import { ReelFixed, HeroBlock, ReelPinnedSpacer } from './kl/Hero';
 import { FloatingChrome, DrawerMenu, ContactModal } from './kl/Chrome';
 import {
-  SectionWhatWeDo, SectionHowItWorks, SectionForWho,
-  SectionValues, SectionWhoWeAre, SectionCTA,
+  SectionWhatWeDo,
+  SectionHowItWorks,
+  SectionForWho,
+  SectionValues,
+  SectionWhoWeAre,
+  SectionCTA,
 } from './kl/Sections';
 
 const TWEAKS = {
   tagline1: 'There are many ways to make something.',
-  tagline2: 'Most of them are wrong.',
+  tagline2: 'Most of them almost work.',
   accentDominance: 'pink',
   logoTreatment: 'chrome',
-  heroFadeOpacity: 0.5,
+  heroFadeOpacity: 0,
   heroBlurPx: 5,
   heroHeightVh: 100,
   reelPinVh: 160,
@@ -32,7 +36,10 @@ export default function HomePage() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') { setMenuOpen(false); setContactOpen(false); }
+      if (e.key === 'Escape') {
+        setMenuOpen(false);
+        setContactOpen(false);
+      }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
@@ -40,7 +47,11 @@ export default function HomePage() {
 
   const navigate = (id: string) => {
     const el = document.getElementById(id);
-    if (el) window.scrollTo({ top: el.offsetTop - 48, behavior: 'smooth' });
+    if (el)
+      window.scrollTo({
+        top: el.getBoundingClientRect().top + window.scrollY - 48,
+        behavior: 'smooth',
+      });
   };
 
   const openContact = () => setContactOpen(true);
@@ -52,17 +63,18 @@ export default function HomePage() {
         onOpenMenu={() => setMenuOpen(true)}
         onOpenContact={openContact}
         scrolled={scrolled}
+        startHidden={true}
       />
 
       <main style={{ position: 'relative', zIndex: 2 }}>
         <HeroBlock onContact={openContact} tweaks={TWEAKS} />
         <ReelPinnedSpacer tweaks={TWEAKS} />
 
-        <div style={{ position: 'relative', zIndex: 5, background: '#000' }}>
+        <div className="relative bg-kl-black" style={{ zIndex: 5 }}>
           <SectionWhatWeDo />
           <SectionHowItWorks />
           <SectionForWho />
-          <SectionValues />
+          {/* <SectionValues /> */}
           <SectionWhoWeAre />
           <SectionCTA onContact={openContact} />
         </div>

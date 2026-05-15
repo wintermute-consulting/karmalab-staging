@@ -1,111 +1,149 @@
-import { KLButton, KLMeta, KLSectionNumber, KLTag, KLBorderedGrid } from '../Primitives';
-import { IconArrowRight } from '../Icons';
-import { sectionWrap } from './shared';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { KLSectionNumber, ParallaxImage } from '../Primitives';
+import { sectionWrap, sectionWrapClass } from './shared';
+
+const ParallaxVideo = ({
+  src,
+  speed = 0.15,
+  style,
+}: {
+  src: string;
+  speed?: number;
+  style?: CSSProperties;
+}) => {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [offset, setOffset] = useState(0);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const update = () => {
+      const rect = (el.parentElement ?? el).getBoundingClientRect();
+      const center = rect.top + rect.height / 2 - window.innerHeight / 2;
+      setOffset(center * speed);
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
+  }, [speed]);
+
+  return (
+    <video
+      ref={ref}
+      src={src}
+      autoPlay
+      loop
+      muted
+      playsInline
+      style={{ ...style, transform: `translateY(${offset}px)`, willChange: 'transform' }}
+    />
+  );
+};
 
 const disciplines = [
   {
-    n: '01', label: 'Films & commercials',
+    n: '01',
+    label: 'Films & commercials',
     copy: 'Ideas brought to screen through film, motion, and visual storytelling.',
-    tags: ['concept', 'production', 'CGI', 'post-production'],
-    caseStudy: '/projects/films-and-commercials',
+    href: '/projects/films-and-commercials',
   },
   {
-    n: '02', label: 'Interactive installations',
+    n: '02',
+    label: 'Interactive installations',
     copy: 'Spaces that react, transform, and invite people to participate.',
-    tags: ['projection mapping', 'interactive exhibitions', 'real-time visuals', 'spatial experiences'],
-    caseStudy: false as false,
+    href: '/projects/interactive-installations',
   },
   {
-    n: '03', label: 'Digital experiences',
+    n: '03',
+    label: 'Digital experiences',
     copy: 'Online experiences designed to be explored, played with, and shared.',
-    tags: ['websites', 'mobile apps', 'interactive platforms', 'live experiences'],
-    caseStudy: false as false,
+    href: '/projects/digital-experiences',
   },
   {
-    n: '04', label: 'AI & generative systems',
+    n: '04',
+    label: 'AI & generative systems',
     copy: 'Creative tools and visuals powered by generative technologies.',
-    tags: ['AI generation', 'generative video', 'conversational systems', 'creative automation'],
-    caseStudy: false as false,
-  },
-  {
-    n: '05', label: 'Creative technology',
-    copy: 'Custom systems connecting code, visuals, sound, and physical space.',
-    tags: ['creative coding', 'XR / AR', 'computer vision', 'custom pipelines'],
-    caseStudy: false as false,
+    href: '/projects/ai-and-generative-systems',
   },
 ];
 
 export const SectionWhatWeDo = () => (
-  <section id="what-we-do" style={sectionWrap}>
-    <div style={{ marginBottom: 56 }}>
-      <KLSectionNumber n="01" label="What we do" />
+  <section
+    id="what-we-do"
+    className={`kl-what-we-do grid overflow-hidden bg-kl-black w-full`}
+    style={{
+      position: 'relative',
+      zIndex: 4,
+      gridTemplateColumns: '3fr 2fr',
+    }}
+  >
+    {/* Left: header + intro text + 2×2 discipline grid */}
+    <div
+      className="kl-what-we-do-left"
+      style={{ padding: 'clamp(72px, 10vw, 128px) clamp(24px, 5vw, 72px)' }}
+    >
+      <div className="mb-12">
+        <KLSectionNumber n="01" label="What we do" />
+      </div>
+
+      <div className="mb-16">
+        <p
+          className="font-sans font-light leading-[1.6] tracking-[-0.01em] text-kl-bone m-0"
+          style={{ fontSize: 'clamp(18px, 1.7vw, 22px)' }}
+        >
+          You come to us when something needs to take shape. <br />
+          <span className="text-kl-pink">With just an idea.</span>
+        </p>
+        <p
+          className="font-sans font-light leading-[1.6] tracking-[-0.01em] text-kl-fog mt-2.5 mb-0"
+          style={{ fontSize: 'clamp(18px, 1.7vw, 23px)' }}
+        >
+          We design the hybrid pipeline that makes it work.
+        </p>
+      </div>
+
+      {/* 2×2 discipline grid */}
+      <div className="grid grid-cols-2 border border-white/8 rounded-2xl overflow-hidden">
+        {disciplines.map((d, i) => (
+          <a
+            key={d.n}
+            href={d.href}
+            className="kl-discipline-cell block no-underline p-7"
+            style={{
+              borderRight: i % 2 === 0 ? '1px solid var(--border-1)' : 'none',
+              borderBottom: i < 2 ? '1px solid var(--border-1)' : 'none',
+            }}
+          >
+            <div className="kl-discipline-cell-label font-sans font-normal text-xl tracking-[-0.02em] text-kl-bone leading-[1.2] mb-2.5">
+              <span className="font-mono text-sm tracking-widest text-kl-pink mr-1.5">{d.n}</span>
+              {d.label}
+            </div>
+            <p className="text-kl-fog text-sm leading-normal m-0 font-light">{d.copy}</p>
+          </a>
+        ))}
+      </div>
     </div>
 
-    <div style={{ maxWidth: 780, marginBottom: 80 }}>
-      <p style={{
-        fontFamily: "'Space Grotesk', sans-serif",
-        fontWeight: 300,
-        fontSize: 'clamp(22px, 2.8vw, 32px)',
-        lineHeight: 1.4,
-        letterSpacing: '-0.02em',
-        color: 'var(--kl-bone)',
-        margin: 0,
-      }}>
-        You come to us when something needs to take shape.{' '}
-        <span style={{ color: 'var(--kl-pink)' }}>With just an idea.</span>
-      </p>
-      <p style={{
-        fontFamily: "'Space Grotesk', sans-serif",
-        fontWeight: 300,
-        fontSize: 'clamp(22px, 2.8vw, 32px)',
-        lineHeight: 1.4,
-        letterSpacing: '-0.02em',
-        color: 'var(--kl-fog)',
-        marginTop: 16,
-      }}>
-        We design the hybrid pipeline that makes it work.
-      </p>
+    {/* Right: large image area, edge-to-edge on the right */}
+    <div className="kl-what-we-do-right bg-kl-black relative overflow-hidden min-h-150">
+      <ParallaxImage
+        src={`${import.meta.env.BASE_URL}assets/shape_1.png`}
+        speed={0.2}
+        style={{
+          position: 'absolute',
+          top: '20px',
+          right: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'contain',
+          objectPosition: 'right top',
+        }}
+        float
+      />
     </div>
-
-    <KLBorderedGrid>
-      {disciplines.map((d) => (
-        <article key={d.n} style={{
-          display: 'grid',
-          gridTemplateColumns: '64px 1fr 1.2fr',
-          gap: 24,
-          alignItems: 'baseline',
-          padding: '28px 0',
-          borderBottom: '1px solid var(--border-1)',
-        }}>
-          <KLMeta color="var(--kl-pink)">§ {d.n}</KLMeta>
-          <div>
-            <div style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontWeight: 400, fontSize: 24,
-              letterSpacing: '-0.02em', color: 'var(--kl-bone)', lineHeight: 1.15,
-            }}>{d.label}</div>
-            <p style={{
-              color: 'var(--kl-fog)', fontSize: 15, lineHeight: 1.55,
-              marginTop: 8, maxWidth: 440, fontWeight: 300
-            }}>{d.copy}</p>
-            {d.caseStudy && (
-              <div style={{ marginTop: 12 }}>
-                <KLButton variant="text" size="sm" onClick={() => { window.location.href = d.caseStudy as string; }}>
-                  View projects <IconArrowRight size={12} />
-                </KLButton>
-              </div>
-            )}
-          </div>
-          <div style={{
-            display: 'flex', flexWrap: 'wrap', gap: 8,
-            alignSelf: 'center', justifyContent: 'flex-end',
-          }}>
-            {d.tags.map((t) => (
-              <KLTag key={t}>{t}</KLTag>
-            ))}
-          </div>
-        </article>
-      ))}
-    </KLBorderedGrid>
   </section>
 );
