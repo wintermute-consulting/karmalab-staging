@@ -1,28 +1,22 @@
-import { KLButton, KLSectionNumber } from '../Primitives';
+import { KLButton } from '../KLButton';
+import { KLSectionNumber } from '../KLSectionNumber';
 import { IconArrowUpRight } from '../Icons';
-import { sectionWrap, sectionWrapClass } from './shared';
+import { sectionWrapClass } from './shared';
 
 const portraitNoiseSvg = encodeURIComponent(
   "<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .5 0'/></filter><rect width='100%' height='100%' filter='url(#n)' opacity='.45'/></svg>",
 );
 
 export const SectionWhoWeAre = () => (
-  <section
-    id="who-we-are"
-    className={`kl-section-wrap ${sectionWrapClass}`}
-    style={{ ...sectionWrap, paddingTop: 192 }}
-  >
+  <section id="who-we-are" className={sectionWrapClass}>
     <div className="mb-14">
       <KLSectionNumber n="05" label="Who we are" />
     </div>
 
-    <div
-      className="kl-who-grid grid items-start"
-      style={{ gridTemplateColumns: '340px 1fr', gap: 64 }}
-    >
+    <div className="grid items-start grid-cols-[340px_1fr] gap-16 max-md:grid-cols-1 max-md:gap-10">
       {/* Portrait placeholder */}
       <div
-        className="kl-who-portrait w-full aspect-[3/4] rounded-md overflow-hidden relative border border-white/8"
+        className="w-full aspect-3/4 rounded-md overflow-hidden relative border border-white/8 max-md:w-[min(200px,50vw)] max-md:mx-auto"
         style={{
           background:
             'linear-gradient(135deg, hsl(320 30% 18%) 0%, hsl(320 20% 8%) 60%, #000 100%)',
@@ -51,8 +45,8 @@ export const SectionWhoWeAre = () => (
           teaching how technology is built and shapes systems.
         </p>
         <p className="font-sans font-light text-xl text-kl-bone leading-[1.55] max-w-[640px] m-0 mb-7">
-          She was joined by <span className="text-kl-pink">Pierre de Milly</span>, a software
-          engineer and AI researcher with an insatiable curiosity for creating digital experiences.
+          She joined hands with <span className="text-kl-pink">Pierre de Milly</span>, a software
+          engineer and serial entrepreneur with a knack for creating meaningful digital experiences.
         </p>
         <p className="font-sans font-light text-xl text-kl-bone leading-[1.55] max-w-[640px] mb-7">
           <span className="text-kl-pink">KarmaLab</span> turns our ideas into a working structure.

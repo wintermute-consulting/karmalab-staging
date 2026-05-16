@@ -1,15 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
-import { KLSectionNumber, ParallaxImage } from '../Primitives';
-import { sectionWrap, sectionWrapClass } from './shared';
+import { KLSectionNumber } from '../KLSectionNumber';
+import { IconArrowRight } from '../Icons';
+import { ParallaxImage } from '../ParallaxImage';
+import { sectionWrapClass } from './shared';
+import { KLButton } from '../KLButton';
 
 const ParallaxDiv = ({
   children,
   speed = 0,
+  className,
   style,
 }: {
   children: ReactNode;
   speed?: number;
+  className?: string;
   style?: CSSProperties;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -36,6 +41,7 @@ const ParallaxDiv = ({
   return (
     <div
       ref={ref}
+      className={className}
       style={{
         transform: `translateY(${offset}px)`,
         willChange: speed !== 0 ? 'transform' : undefined,
@@ -53,12 +59,17 @@ const phases = [
     label: 'Pipeline design',
     lead: 'You come with something vague or partial.',
     lines: ['You leave with clarity.', 'You can also stay and build it with us.'],
+    link: undefined as { label: string; href: string } | undefined,
   },
   {
     n: '02',
     label: 'Production',
     lead: 'Then we build it together.',
     lines: ['We assemble the team.', 'We direct the process.'],
+    link: {
+      label: 'Our projects',
+      href: '/projects',
+    },
   },
   {
     n: '03',
@@ -68,15 +79,14 @@ const phases = [
       'What matters for us is to show you how it works.',
       'This knowledge is part of the process.',
     ],
+    link: undefined as { label: string; href: string } | undefined,
   },
 ];
 
 type Phase = (typeof phases)[number];
 
-const B = '1px solid var(--border-solid)';
-
-const PhaseCard = ({ phase, style }: { phase: Phase; style?: CSSProperties }) => (
-  <div className="p-7 pb-10" style={{ border: B, ...style }}>
+const PhaseCard = ({ phase }: { phase: Phase }) => (
+  <div className="p-7 pb-10 border-y sm:border-x border-(--border-solid)">
     <div className="font-sans font-normal text-[28px] tracking-[-0.02em] text-kl-bone leading-[1.12]">
       <span className="font-mono text-sm tracking-widest text-kl-pink mr-1.5">{phase.n}</span>
       {phase.label}
@@ -87,12 +97,16 @@ const PhaseCard = ({ phase, style }: { phase: Phase; style?: CSSProperties }) =>
     {phase.lines.map((line, li) => (
       <p
         key={li}
-        className="mb-1 text-kl-fog text-[15px] leading-[1.55]"
-        style={{ marginTop: li === 0 ? 16 : 4 }}
+        className={`mb-1 text-kl-fog text-[15px] leading-[1.55] ${li === 0 ? 'mt-4' : 'mt-1'}`}
       >
         {line}
       </p>
     ))}
+    {phase.link && (
+      <KLButton variant="text" size="md" href={phase.link.href}>
+        {phase.link.label} <IconArrowRight size={14} />
+      </KLButton>
+    )}
   </div>
 );
 
@@ -100,22 +114,17 @@ const PhaseCard = ({ phase, style }: { phase: Phase; style?: CSSProperties }) =>
 const ImgBox = ({
   aspectRatio = '4/3',
   speed = 0.12,
-  style,
+  className,
   src = `${import.meta.env.BASE_URL}assets/shape_1.png`,
 }: {
   aspectRatio?: string;
   speed?: number;
-  style?: CSSProperties;
+  className?: string;
   src?: string;
 }) => (
   <div
-    style={{
-      position: 'relative',
-      // overflow: 'hidden',
-      background: '#000',
-      aspectRatio,
-      ...style,
-    }}
+    className={['relative bg-black', className].filter(Boolean).join(' ')}
+    style={{ aspectRatio }}
   >
     <ParallaxImage
       src={src}
@@ -135,23 +144,23 @@ const ImgBox = ({
 );
 
 export const SectionHowItWorks = () => (
-  <section id="how-it-works" className={`kl-section-wrap ${sectionWrapClass}`} style={sectionWrap}>
-    <div className="mb-14">
+  <section id="how-it-works" className={`${sectionWrapClass} max-md:px-0!`}>
+    <div className="mb-4 md:mb-14 max-md:px-6">
       <KLSectionNumber n="02" label="How it works" />
     </div>
 
     {/* Stair layout — no gap between columns, borders merge via marginLeft: -1 */}
-    <div className="kl-hiw-stair flex items-start">
+    <div className="flex md:items-start max-md:flex-col">
       {/* ── Column 1 ── */}
       <div className="flex-1 flex flex-col">
-        <ParallaxDiv speed={0} style={{ marginTop: 90 }}>
+        <ParallaxDiv speed={0} className="md:mt-22">
           <PhaseCard phase={phases[0]} />
         </ParallaxDiv>
         <ImgBox
           src={`${import.meta.env.BASE_URL}assets/pipeline.png`}
           aspectRatio="4/3"
           speed={0.1}
-          style={{ marginTop: 40, marginRight: 1 }}
+          className="md:mt-10 md:mr-px"
         />
       </div>
 
@@ -160,16 +169,16 @@ export const SectionHowItWorks = () => (
         <ImgBox
           src={`${import.meta.env.BASE_URL}assets/production_1.png`}
           speed={-0.1}
-          style={{ marginBottom: 10 }}
+          className="md:mb-2.5 max-md:hidden"
           aspectRatio="16/9"
         />
-        <ParallaxDiv speed={0.04} style={{ marginTop: 20, marginLeft: -1 }}>
+        <ParallaxDiv speed={0.04} className="md:mt-5 md:-ml-px">
           <PhaseCard phase={phases[1]} />
         </ParallaxDiv>
         <ImgBox
           src={`${import.meta.env.BASE_URL}assets/production_2.png`}
           speed={0.3}
-          style={{ marginTop: 10, marginRight: 1 }}
+          className="mt-2.5 mr-px max-md:hidden"
         />
       </div>
 
@@ -179,9 +188,9 @@ export const SectionHowItWorks = () => (
           src={`${import.meta.env.BASE_URL}assets/technology_2.png`}
           aspectRatio="4/3"
           speed={0.2}
-          style={{ marginTop: 40 }}
+          className="md:mt-10"
         />
-        <ParallaxDiv speed={0.1} style={{ marginTop: 60, marginLeft: -1 }}>
+        <ParallaxDiv speed={0.1} className="md:mt-15 md:-ml-px">
           <PhaseCard phase={phases[2]} />
         </ParallaxDiv>
       </div>

@@ -1,11 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
-import { KLIconButton, KLButton } from './Primitives';
+import { KLIconButton } from './KLIconButton';
+import { KLButton } from './KLButton';
 import {
   IconPlay,
   IconPause,
   IconVolume,
   IconVolumeOff,
   IconFullscreen,
+  IconRestart,
   IconArrowRight,
 } from './Icons';
 
@@ -32,6 +34,24 @@ export const ReelFixed = ({ tweaks }: ReelFixedProps) => {
   const [playing, setPlaying] = useState(true);
   const [muted, setMuted] = useState(true);
   const [progress, setProgress] = useState(0);
+  const [active, setActive] = useState(true);
+  const inactivityTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const resetTimer = () => {
+      setActive(true);
+      if (inactivityTimer.current) clearTimeout(inactivityTimer.current);
+      inactivityTimer.current = setTimeout(() => setActive(false), 2000);
+    };
+    resetTimer();
+    window.addEventListener('mousemove', resetTimer, { passive: true });
+    window.addEventListener('scroll', resetTimer, { passive: true });
+    return () => {
+      window.removeEventListener('mousemove', resetTimer);
+      window.removeEventListener('scroll', resetTimer);
+      if (inactivityTimer.current) clearTimeout(inactivityTimer.current);
+    };
+  }, []);
 
   useEffect(() => {
     const onScroll = () => {
@@ -97,11 +117,12 @@ export const ReelFixed = ({ tweaks }: ReelFixedProps) => {
     blur = 0;
   }
 
-  const controlsOpacity =
+  const scrollControlsOpacity =
     progress >= 0.92 && progress <= 2.0
       ? Math.min(1, Math.max(0, (progress - 0.92) / 0.22)) *
         Math.min(1, Math.max(0, (1.88 - progress) / 0.16))
       : 0;
+  const controlsOpacity = scrollControlsOpacity * (active ? 1 : 0);
 
   const grainSvg = encodeURIComponent(
     `<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(#n)' opacity='0.35'/></svg>`,
@@ -142,14 +163,29 @@ export const ReelFixed = ({ tweaks }: ReelFixedProps) => {
 
       {/* Reel controls */}
       <div
-        className="fixed inset-x-0 bottom-12 flex justify-center z-1"
+        className="fixed inset-x-0 bottom-12 flex justify-center"
         style={{
           gap: 14,
           opacity: controlsOpacity,
           pointerEvents: controlsOpacity > 0.1 ? 'auto' : 'none',
-          transition: 'opacity 180ms linear',
+          transition: 'opacity 500ms ease',
+          zIndex: 4,
         }}
       >
+        <KLIconButton
+          onClick={() => {
+            const v = videoRef.current;
+            if (!v) return;
+            v.currentTime = 0;
+            v.play();
+            setPlaying(true);
+          }}
+          accent="lime"
+          title="Restart"
+          size={52}
+        >
+          <IconRestart size={20} />
+        </KLIconButton>
         <KLIconButton
           onClick={togglePlay}
           accent="lime"
@@ -198,22 +234,14 @@ export const HeroBlock = ({ onContact, tweaks }: HeroBlockProps) => {
   return (
     <section style={{ position: 'relative', height: `${tweaks.heroHeightVh}vh`, zIndex: 2 }}>
       <div
-        className="kl-hero-inner"
+        className="sticky top-0 h-screen grid items-center grid-cols-[1.1fr_1fr] p-[0_clamp(24px,6vw,96px)] gap-[clamp(24px,6vw,80px)] max-md:grid-cols-1! max-md:p-[0_24px_32px]! max-md:gap-4! max-md:justify-items-center!"
         style={{
-          position: 'sticky',
-          top: 0,
-          height: '100vh',
-          display: 'grid',
-          gridTemplateColumns: '1.1fr 1fr',
-          alignItems: 'center',
-          padding: '0 clamp(24px, 6vw, 96px)',
-          gap: 'clamp(24px, 6vw, 80px)',
           opacity: fade,
           transform: `translateY(${shift}px)`,
         }}
       >
         {/* Left: logo */}
-        <div className="kl-hero-logo flex items-center justify-center">
+        <div className="flex items-center justify-center max-md:w-[min(220px,60vw)] max-md:aspect-square max-md:mt-4">
           <img
             src={`${import.meta.env.BASE_URL}uploads/chrome_logo_transparent.png`}
             alt="KarmaLab"
@@ -223,8 +251,9 @@ export const HeroBlock = ({ onContact, tweaks }: HeroBlockProps) => {
         </div>
 
         {/* Right: tagline */}
-        <div className="kl-hero-tagline flex flex-col" style={{ maxWidth: 620, gap: 48 }}>
+        <div className="flex flex-col max-w-155 gap-12 max-md:max-w-full max-md:gap-6">
           <h1
+            className="max-md:text-[clamp(26px,7.5vw,40px)]! max-md:tracking-[-1px]!"
             style={{
               fontFamily: "'Space Grotesk', sans-serif",
               fontWeight: 300,
@@ -239,7 +268,7 @@ export const HeroBlock = ({ onContact, tweaks }: HeroBlockProps) => {
             <div className="text-kl-pink font-light">{tweaks.tagline2}</div>
           </h1>
 
-          <div className="kl-hero-tagline-btns flex items-center flex-wrap" style={{ gap: 14 }}>
+          <div className="flex items-center flex-wrap gap-5 max-md:flex-col max-md:items-start max-md:gap-2.5">
             <KLButton
               size="lg"
               accent={tweaks.accentDominance === 'pink' ? 'pink' : 'lime'}
@@ -253,7 +282,7 @@ export const HeroBlock = ({ onContact, tweaks }: HeroBlockProps) => {
               <IconPlay size={16} />
               Watch video
             </KLButton>
-            <KLButton variant="text" size="md" onClick={onContact}>
+            <KLButton variant="text" size="lg" onClick={onContact}>
               or get in touch <IconArrowRight size={14} />
             </KLButton>
           </div>
@@ -261,7 +290,7 @@ export const HeroBlock = ({ onContact, tweaks }: HeroBlockProps) => {
 
         {/* Scroll indicator */}
         <div
-          className="kl-hero-scroll-indicator absolute left-1/2 flex flex-col items-center"
+          className="absolute left-1/2 flex flex-col items-center max-md:hidden"
           aria-hidden
           style={{
             bottom: 36,
@@ -312,7 +341,14 @@ interface ReelPinnedSpacerProps {
 }
 
 export const ReelPinnedSpacer = ({ tweaks }: ReelPinnedSpacerProps) => (
-  <section style={{ position: 'relative', height: `${tweaks.reelPinVh}vh`, zIndex: 3 }}>
-    <div className="sticky top-0 h-screen" />
+  <section
+    style={{
+      position: 'relative',
+      height: `${tweaks.reelPinVh}vh`,
+      zIndex: 3,
+      pointerEvents: 'none',
+    }}
+  >
+    <div className="sticky top-0 h-screen pointer-events-none" />
   </section>
 );

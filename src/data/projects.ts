@@ -1,8 +1,8 @@
 export interface Project {
-  client: string;
-  title: string;
+  client?: string;
+  title?: string;
   /** Path or URL to an MP4 for the projects grid. If omitted the cell renders empty (black). */
-  video?: string;
+  video: string;
   /** When true, clicking the cell opens the video in a fullscreen modal. */
   modal?: boolean;
 }
@@ -55,23 +55,18 @@ export const categories: Category[] = [
     n: '02',
     label: 'Interactive installations',
     copy: 'Spaces that react, transform, and invite people to participate.',
-    tags: [
-      'Projection mapping',
-      'Interactive exhibitions',
-      'Real-time visuals',
-      'Spatial experiences',
-    ],
+    tags: ['Projection mapping', 'Interactive displays', 'Scenography'],
     projects: [
       {
-        client: 'Centre Pompidou',
-        title: 'Abstract Forms',
-        video: 'https://videos.pexels.com/video-files/3571264/3571264-hd_1920_1080_30fps.mp4',
+        client: 'Strike Against the Archive @ ADAGP',
+        title: 'Interactive installations',
+        video: 'https://karmalab-cdn.s3.us-east-1.amazonaws.com/strike.mp4',
         modal: true,
       },
       {
-        client: 'Gaîté Lyrique',
-        title: 'Natural Textures',
-        video: 'https://videos.pexels.com/video-files/2499611/2499611-hd_1920_1080_30fps.mp4',
+        client: 'Sanofi',
+        title: 'Sensorial digital experience',
+        video: 'https://karmalab-cdn.s3.us-east-1.amazonaws.com/sanofi.mp4',
         modal: true,
       },
     ],
@@ -81,40 +76,23 @@ export const categories: Category[] = [
     n: '03',
     label: 'Digital experiences',
     copy: 'Online experiences designed to be explored, played with, and shared.',
-    tags: ['Websites', 'Mobile apps', 'Interactive platforms', 'Live experiences'],
+    tags: ['Websites', 'Mobile apps', 'Workflow automation'],
     projects: [
       {
-        client: 'Peter Lindergh',
+        client: 'Peter Lindbergh',
         title: 'Design by David Polonia',
-        video: '/videos/peter_lindbergh.mp4',
+        video: 'https://karmalab-cdn.s3.us-east-1.amazonaws.com/peter_lindbergh.mp4',
         modal: true,
       },
       {
         client: 'Kenzo',
         title: 'Design by Kim Boutin',
-        video: '/videos/kenzo.mp4',
-        modal: true,
-      },
-    ],
-  },
-  {
-    slug: 'ai-and-generative-systems',
-    n: '04',
-    label: 'AI & generative systems',
-    copy: 'Creative tools and visuals powered by generative technologies.',
-    tags: ['AI generation', 'Generative video', 'Conversational systems', 'Creative automation'],
-    projects: [
-      {
-        client: 'Arte Creative',
-        title: 'Soft Architecture',
-        video: 'https://videos.pexels.com/video-files/4434094/4434094-hd_1920_1080_25fps.mp4',
+        video: 'https://karmalab-cdn.s3.us-east-1.amazonaws.com/kenzo.mp4',
         modal: true,
       },
       {
-        client: 'Renault',
-        title: 'Studio Session',
-        video: 'https://videos.pexels.com/video-files/3571251/3571251-hd_1920_1080_30fps.mp4',
-        modal: false,
+        video: 'https://karmalab-cdn.s3.us-east-1.amazonaws.com/madame_c.mp4',
+        modal: true,
       },
     ],
   },

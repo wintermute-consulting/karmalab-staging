@@ -30,10 +30,6 @@ export default function CategoryPage({ category }: CategoryPageProps) {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  const navigate = (id: string) => {
-    window.location.href = `/#${id}`;
-  };
-
   const openContact = () => setContactOpen(true);
 
   return (
@@ -126,12 +122,7 @@ export default function CategoryPage({ category }: CategoryPageProps) {
 
       <SectionCTA onContact={openContact} />
 
-      <DrawerMenu
-        open={menuOpen}
-        onClose={() => setMenuOpen(false)}
-        onOpenContact={openContact}
-        onNavigate={navigate}
-      />
+      <DrawerMenu open={menuOpen} onClose={() => setMenuOpen(false)} onOpenContact={openContact} />
       <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
     </>
   );

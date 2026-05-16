@@ -1,14 +1,61 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import type { Project } from '../../../data/projects';
-import { KLIconButton } from '../Primitives';
+import { KLIconButton } from '../KLIconButton';
 import { IconClose } from '../Icons';
 
 interface ProjectsGridProps {
   projects: Project[];
 }
 
-const TARGET_COLS = 2;
+type GridLayout = 'single' | 'double' | 'triple' | 'eight';
+
+function getLayout(count: number): GridLayout {
+  if (count === 1) return 'single';
+  if (count === 2) return 'double';
+  if (count === 3) return 'triple';
+  return 'eight';
+}
+
+/** Returns ordered cells (null = blank placeholder) for the given layout. */
+function buildCells(projects: Project[], layout: GridLayout): Array<Project | null> {
+  switch (layout) {
+    case 'single':
+      return [projects[0]];
+    case 'double':
+      return [projects[0], projects[1]];
+    case 'triple':
+      // 2-col grid, 3 rows — alternating left / right / left
+      // Row 1: [p0, blank]  Row 2: [blank, p1]  Row 3: [p2, blank]
+      return [projects[0], null, null, projects[1], projects[2], null];
+    case 'eight': {
+      const [p0, p1, p2, p3, p4, p5, p6, p7] = projects;
+      const _ = null;
+      // Fixed editorial patterns per project count
+      // prettier-ignore
+      switch (projects.length) {
+        case 4: return [p0, _,  _,  p1, p2, _,  _,  p3]; // L / R / L / R
+        case 5: return [p0, p1, p2, _,  _,  p3, p4, _];  // full / L / R / L
+        case 6: return [p0, p1, p2, _,  _,  p3, p4, p5]; // full / L / R / full
+        case 7: return [p0, p1, p2, p3, p4, p5, p6, _];  // full grid, last cell empty
+        default: return [p0, p1, p2, p3, p4, p5, p6, p7]; // 8: full grid
+      }
+    }
+  }
+}
+
+function getGridCols(layout: GridLayout): string {
+  switch (layout) {
+    case 'single':
+      return '1fr';
+    case 'double':
+      return '1fr';
+    case 'triple':
+      return 'repeat(2, 1fr)';
+    case 'eight':
+      return 'repeat(2, 1fr)';
+  }
+}
 
 interface VideoModalProps {
   src: string | null;
@@ -105,24 +152,13 @@ export const SectionProjectsGrid = ({ projects }: ProjectsGridProps) => {
 
   const activeVideo = activeProject?.video ?? null;
 
-  const paddedCount =
-    projects.length === 0
-      ? TARGET_COLS
-      : Math.ceil(Math.max(projects.length, 1) / TARGET_COLS) * TARGET_COLS;
-
-  type GridCell = Project | null;
-  const gridCells: GridCell[] = [
-    ...projects,
-    ...Array<null>(paddedCount - projects.length).fill(null),
-  ];
+  const layout = getLayout(projects.length);
+  const gridCells = buildCells(projects, layout);
 
   return (
     <>
       <section aria-label="Projects" className="relative bg-kl-black">
-        <div
-          className="grid gap-0.75"
-          style={{ gridTemplateColumns: `repeat(${TARGET_COLS}, 1fr)` }}
-        >
+        <div className="grid gap-0.75" style={{ gridTemplateColumns: getGridCols(layout) }}>
           {gridCells.map((cell, i) => {
             const clickable = Boolean(cell?.modal && cell?.video);
             return (
@@ -147,12 +183,14 @@ export const SectionProjectsGrid = ({ projects }: ProjectsGridProps) => {
                   background: '#000',
                   cursor: clickable ? 'pointer' : 'default',
                   transition: 'filter 200ms ease',
+                  filter: 'brightness(0.8) saturate(0.8)',
                 }}
                 onMouseEnter={(e) => {
-                  if (cell) (e.currentTarget as HTMLElement).style.filter = 'brightness(1.2)';
+                  if (cell)
+                    (e.currentTarget as HTMLElement).style.filter = 'brightness(1.2) saturate(1)';
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.filter = '';
+                  (e.currentTarget as HTMLElement).style.filter = 'brightness(0.8) saturate(0.8)';
                 }}
                 onFocus={(e) => {
                   if (clickable)

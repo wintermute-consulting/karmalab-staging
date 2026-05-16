@@ -1,6 +1,6 @@
-import { KLButton, KLSectionNumber } from '../Primitives';
+import { KLButton } from '../KLButton';
 import { IconArrowRight, IconArrowUpRight } from '../Icons';
-import { sectionWrap, sectionWrapClass } from './shared';
+import { sectionWrapClass } from './shared';
 
 interface SectionCTAProps {
   onContact: () => void;
@@ -9,28 +9,25 @@ interface SectionCTAProps {
 export const SectionCTA = ({ onContact }: SectionCTAProps) => (
   <section
     id="cta"
-    className={`kl-section-wrap ${sectionWrapClass}`}
+    className={sectionWrapClass}
     style={{
-      ...sectionWrap,
-      paddingTop: 192,
-      paddingBottom: 192,
       borderTop: '1px solid var(--border-1)',
     }}
   >
-    <div className="kl-cta-inner flex items-center" style={{ gap: 'clamp(32px, 5vw, 80px)' }}>
-      <div className="kl-cta-image" style={{ flex: '0 0 40%', maxWidth: '40%' }}>
+    <div className="flex items-center gap-[clamp(32px,5vw,80px)] max-md:flex-col max-md:gap-10">
+      <div className="flex-none basis-[40%] max-w-[40%] max-md:flex-none max-md:max-w-[min(280px,72vw)] max-md:w-full max-md:mx-auto">
         <img src="/assets/dog.png" alt="" className="w-full h-auto block rounded-2xl" />
       </div>
 
-      <div className="kl-cta-text" style={{ flex: '1 1 0' }}>
+      <div className="flex-1 max-md:max-w-full">
         <div
-          className="font-sans font-light text-kl-bone leading-[0.95] tracking-tighter"
+          className="font-sans font-light text-kl-bone leading-tight tracking-tighter"
           style={{ fontSize: 'clamp(48px, 8vw, 96px)' }}
         >
           Bring your <span className="text-kl-pink">ideas</span>
         </div>
 
-        <div className="kl-cta-text-btns mt-16 flex gap-4 items-center flex-wrap">
+        <div className="mt-16 flex gap-4 items-center flex-wrap max-md:flex-col max-md:items-start max-md:gap-2.5">
           <KLButton size="lg" onClick={onContact}>
             Contact us <IconArrowUpRight size={16} />
           </KLButton>

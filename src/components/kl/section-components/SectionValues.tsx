@@ -1,5 +1,7 @@
-import { KLMeta, KLSectionNumber, KLBorderedGrid, KLBorderedCell } from '../Primitives';
-import { sectionWrap, sectionWrapClass } from './shared';
+import { KLMeta } from '../KLMeta';
+import { KLSectionNumber } from '../KLSectionNumber';
+import { KLBorderedGrid, KLBorderedCell } from '../KLBorderedGrid';
+import { sectionWrapClass } from './shared';
 
 const values = [
   { n: '01', t: 'Hybrid by design', d: 'Human-led, technology-extended.' },
@@ -12,16 +14,16 @@ const values = [
 ];
 
 export const SectionValues = () => (
-  <section
-    id="values"
-    className={`kl-section-wrap ${sectionWrapClass}`}
-    style={{ ...sectionWrap, paddingTop: 192 }}
-  >
+  <section id="values" className={sectionWrapClass} style={{ paddingTop: 192 }}>
     <div className="mb-14">
       <KLSectionNumber n="04" label="Values" />
     </div>
 
-    <KLBorderedGrid columns={3} className="kl-grid-1-mobile" style={{ marginTop: 80 }}>
+    <KLBorderedGrid
+      columns={3}
+      className="max-md:grid-cols-1! max-md:*:border-r-0!"
+      style={{ marginTop: 80 }}
+    >
       {values.map((v, i) => (
         <KLBorderedCell key={v.n} hasRight={i < values.length - 1}>
           <KLMeta color="var(--kl-pink)" style={{ fontSize: 13 }}>

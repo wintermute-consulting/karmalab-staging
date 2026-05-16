@@ -11,7 +11,7 @@ import {
 } from './kl/Sections';
 
 const TWEAKS = {
-  tagline1: 'There are many ways to make something.',
+  tagline1: 'There are many ways to create something.',
   tagline2: 'Most of them almost work.',
   accentDominance: 'pink',
   logoTreatment: 'chrome',
@@ -45,15 +45,6 @@ export default function HomePage() {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  const navigate = (id: string) => {
-    const el = document.getElementById(id);
-    if (el)
-      window.scrollTo({
-        top: el.getBoundingClientRect().top + window.scrollY - 48,
-        behavior: 'smooth',
-      });
-  };
-
   const openContact = () => setContactOpen(true);
 
   return (
@@ -66,7 +57,7 @@ export default function HomePage() {
         startHidden={true}
       />
 
-      <main style={{ position: 'relative', zIndex: 2 }}>
+      <main style={{ position: 'relative' }}>
         <HeroBlock onContact={openContact} tweaks={TWEAKS} />
         <ReelPinnedSpacer tweaks={TWEAKS} />
 
@@ -80,12 +71,7 @@ export default function HomePage() {
         </div>
       </main>
 
-      <DrawerMenu
-        open={menuOpen}
-        onClose={() => setMenuOpen(false)}
-        onOpenContact={openContact}
-        onNavigate={navigate}
-      />
+      <DrawerMenu open={menuOpen} onClose={() => setMenuOpen(false)} onOpenContact={openContact} />
       <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
     </>
   );

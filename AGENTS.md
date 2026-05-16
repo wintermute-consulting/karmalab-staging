@@ -7,15 +7,15 @@ Built with the KarmaLab design system: black canvas, neon pink (#FB48C4) for con
 
 ## Stack
 
-| Layer | Tool |
-|---|---|
-| Framework | Astro 6 (static output) |
-| UI islands | React 19 (`client:load`) |
-| Language | TypeScript (strict) |
-| Styling | Inline styles + CSS variables (no CSS-in-JS lib) |
-| Fonts | Space Grotesk (display/body) + JetBrains Mono (mono) via Google Fonts |
+| Layer      | Tool                                                                  |
+| ---------- | --------------------------------------------------------------------- |
+| Framework  | Astro 6 (static output)                                               |
+| UI islands | React 19 (`client:load`)                                              |
+| Language   | TypeScript (strict)                                                   |
+| Styling    | Tailwind CSS v4 (`@tailwindcss/vite`) + CSS custom properties         |
+| Fonts      | Space Grotesk (display/body) + JetBrains Mono (mono) via Google Fonts |
 
-**Key constraint:** All styling is done via inline `style` props using CSS custom properties defined in `src/styles/global.css`. Do NOT introduce Tailwind, styled-components, or CSS modules — keep the existing pattern.
+**Styling rules:** Use Tailwind utility classes for all styling. Design system color tokens are available as `text-kl-pink`, `bg-kl-lime`, `border-kl-bone`, etc. (mapped via `@theme` in `global.css`). Use `style` props only for truly dynamic/runtime values (e.g. `transform`, `aspectRatio` from props). Do NOT use styled-components or CSS modules.
 
 ---
 
@@ -54,14 +54,11 @@ public/
 ## Design system tokens (key vars)
 
 ```css
---kl-pink:    #FB48C4   /* content emphasis, section markers, tags */
---kl-lime:    #85FF00   /* interactive: buttons, links, focus */
---kl-bone:    #EDEDEF   /* primary text */
---kl-fog:     #C6C6CE   /* secondary text */
---kl-ash:     #8A8A94   /* tertiary / meta text */
---kl-ink:     #0A0A0B   /* elevated surfaces (drawer, modal) */
---border-1:   rgba(255,255,255,0.08)
---border-2:   rgba(255,255,255,0.14)
+--kl-pink: #fb48c4 /* content emphasis, section markers, tags */ --kl-lime: #85ff00
+  /* interactive: buttons, links, focus */ --kl-bone: #ededef /* primary text */ --kl-fog: #c6c6ce
+  /* secondary text */ --kl-ash: #8a8a94 /* tertiary / meta text */ --kl-ink: #0a0a0b
+  /* elevated surfaces (drawer, modal) */ --border-1: rgba(255, 255, 255, 0.08)
+  --border-2: rgba(255, 255, 255, 0.14);
 ```
 
 Buttons use `accent="lime"` for interactive CTAs and `accent="pink"` for contact/identity actions.  
@@ -72,15 +69,20 @@ The pill border radius (999px) is the signature KarmaLab shape — use it everyw
 ## Primitive components
 
 ### `KLButton`
+
 ```tsx
-<KLButton variant="primary" size="lg" accent="lime" onClick={fn}>Label</KLButton>
+<KLButton variant="primary" size="lg" accent="lime" onClick={fn}>
+  Label
+</KLButton>
 // variants: 'primary' | 'ghost' | 'text'
 // sizes: 'sm' | 'md' | 'lg'
 // accent: 'lime' (default, interactive) | 'pink' (identity/contact)
 ```
 
 ### `KLIconButton`
+
 Square pill button for icons (burger, close, play/pause).
+
 ```tsx
 <KLIconButton onClick={fn} accent="pink" size={48} title="Open menu">
   <IconMenu size={20} />
@@ -88,19 +90,25 @@ Square pill button for icons (burger, close, play/pause).
 ```
 
 ### `KLMeta`
+
 Mono uppercase label — section markers, client names, tags.
+
 ```tsx
 <KLMeta color="var(--kl-pink)">§ 01</KLMeta>
 ```
 
 ### `KLSectionNumber`
+
 Section heading with `§ NN` marker.
+
 ```tsx
 <KLSectionNumber n="01" label="What we do" />
 ```
 
 ### `KLEyebrow`
+
 Pink mono eyebrow label.
+
 ```tsx
 <KLEyebrow>Our clients</KLEyebrow>
 ```
@@ -151,22 +159,23 @@ In `src/components/kl/Sections.tsx`, find the `disciplines` array. The `caseStud
 ### Edit showreel video
 
 In `src/components/kl/Hero.tsx`, update `REEL_SRC`:
+
 ```ts
-const REEL_SRC = 'https://...';  // or a local /uploads/ path
+const REEL_SRC = 'https://...'; // or a local /uploads/ path
 ```
 
 ---
 
 ## Pages & routing
 
-| URL | Page | Data source |
-|---|---|---|
-| `/` | Home | `src/components/HomePage.tsx` |
-| `/projects/films-and-commercials` | Films & Commercials | `categories[0]` in `projects.ts` |
-| `/projects/interactive-installations` | Interactive Installations | `categories[1]` |
-| `/projects/digital-experiences` | Digital Experiences | `categories[2]` |
-| `/projects/ai-and-generative-systems` | AI & Generative Systems | `categories[3]` |
-| `/projects/creative-technology` | Creative Technology | `categories[4]` |
+| URL                                   | Page                      | Data source                      |
+| ------------------------------------- | ------------------------- | -------------------------------- |
+| `/`                                   | Home                      | `src/components/HomePage.tsx`    |
+| `/projects/films-and-commercials`     | Films & Commercials       | `categories[0]` in `projects.ts` |
+| `/projects/interactive-installations` | Interactive Installations | `categories[1]`                  |
+| `/projects/digital-experiences`       | Digital Experiences       | `categories[2]`                  |
+| `/projects/ai-and-generative-systems` | AI & Generative Systems   | `categories[3]`                  |
+| `/projects/creative-technology`       | Creative Technology       | `categories[4]`                  |
 
 All project pages share `CategoryPage.tsx` — only the data differs.
 
@@ -193,14 +202,16 @@ npm run preview  # preview production build locally
 ### Replace placeholder logos/images
 
 Drop files in `public/assets/` or `public/uploads/` and update the `src` path in:
+
 - `src/components/kl/Hero.tsx` — chrome logo & white logo
 - `src/components/kl/Chrome.tsx` — horizontal logo in drawer
 
 ### Add real project images
 
 Place images in `public/projects/<category-slug>/<project>/` and reference them in `projects.ts`:
+
 ```ts
-images: [{ src: '/projects/films-and-commercials/arte/still-1.jpg', caption: 'still 1' }]
+images: [{ src: '/projects/films-and-commercials/arte/still-1.jpg', caption: 'still 1' }];
 ```
 
 ### Style consistency rules
